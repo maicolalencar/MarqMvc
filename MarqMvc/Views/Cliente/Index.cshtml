@@ -1,0 +1,32 @@
+﻿@model List<MarqMvc.Models.Cliente>
+
+@{
+    ViewData["Title"] = "Index";
+}
+<h2>Clientes</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Nome</th>
+            <th>Data Nascimento</th>
+            <th>Endereco</th>
+            <th>DiaDaSemana</th>
+            <th>Hora</th>
+        </tr>
+    </thead>
+
+    <tfoot>
+        
+        @foreach (var cliente in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(x => cliente.NomeCliente)
+                </td>
+                <td>
+                    @Html.DisplayFor(x => cliente.NomeCliente)
+                </td>
+            </tr>
+        }
+    </tfoot>
+</table>

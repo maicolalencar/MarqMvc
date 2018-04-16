@@ -1,0 +1,69 @@
+﻿@model IEnumerable<MarqMvc.Models.Cliente>
+
+@{
+    ViewData["Title"] = "ClienteListaView";
+}
+
+<h2>ClienteListaView</h2>
+
+<p>
+    <a asp-action="ClientePaginaAdicionar">Create New</a>
+</p>
+<center><p style="color:red">@TempData["Mensagem"]</p></center>
+
+<table class="table">
+    <thead>
+        <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.IdCliente)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.NomeCliente)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DataNascimento)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Endereco)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DiaDaSemana)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Hora)
+                </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdCliente)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NomeCliente)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DataNascimento)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Endereco)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DiaDaSemana)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Hora)
+            </td>
+            <td>
+                @Html.ActionLink("Editar", "ClientePaginaEditar", new { id=item.IdCliente }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Excluir", "ClienteExcluir", new { id=item.IdCliente })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+
