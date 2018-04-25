@@ -20,9 +20,11 @@ namespace MarqMvc.Models
 
         public string Endereco { get; set; }
 
-        public DiasDaSemana DiaDaSemana { get; set; }
+        public string email { get; set; }
 
-        [DataType(DataType.Time)]
-        public TimeSpan Hora { get; set; }
+        [Phone]
+        public string telefone { get; set; }
+
+        public IList<Agendamentos> Agendamentos { get; set; }
     }
 }

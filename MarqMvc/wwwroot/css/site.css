@@ -33,3 +33,9 @@
         display: none;
     }
 }
+
+.table-mini {
+    border-collapse: separate;
+    border-spacing: 1px;
+    text-align  :center;
+}

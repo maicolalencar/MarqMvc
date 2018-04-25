@@ -85,7 +85,8 @@ namespace MarqMvc.Controllers
             return View("ClienteAdicionar");
         }
 
-            public async Task<IActionResult> ClienteAdicionar(Cliente cliente)
+        [HttpPost]
+        public async Task<IActionResult> ClienteAdicionar(Cliente cliente)
         {
             using (var client = new HttpClient())
             {
@@ -168,5 +169,56 @@ namespace MarqMvc.Controllers
             }
         }
 
+        public async Task<IActionResult> TesteAjax(TesteAjax varTeste1)
+        {
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(BaseUri);
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                //HttpResponseMessage response = await client.PutAsJsonAsync($"api/Clientes/{cliente.IdCliente}", cliente);
+
+                //response.EnsureSuccessStatusCode();
+
+                TempData["Mensagem"] = "Cliente alterado com sucesso.";
+
+                return RedirectToAction("ClienteLista");
+
+
+            }
+        }
+
+        public async Task<IActionResult> TesteAjaxString([FromBody] string varTeste1)
+        {
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(BaseUri);
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                //HttpResponseMessage response = await client.PutAsJsonAsync($"api/Clientes/{cliente.IdCliente}", cliente);
+
+                //response.EnsureSuccessStatusCode();
+
+                TempData["Mensagem"] = "Cliente alterado com sucesso.";
+
+                return RedirectToAction("ClienteLista");
+
+
+            }
+        }
+
+        [HttpPost]
+        public ActionResult ProcessSaleOrder(List<XMLInvoiceGeneration> invoices)
+        {
+            return new EmptyResult();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ProcessSaleOrderAsync(List<XMLInvoiceGeneration> invoices)
+        {
+            return new EmptyResult();
+        }
     }
 }

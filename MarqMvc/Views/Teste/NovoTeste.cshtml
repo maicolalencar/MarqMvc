@@ -1,20 +1,20 @@
 ﻿@model MarqMvc.Models.Cliente
 
 @{
-    ViewData["Title"] = "ClienteEditar";
+    ViewData["Title"] = "NovoTeste";
 }
 
-<h2>ClienteEditar</h2>
+<h2>NovoTeste</h2>
 
 <h4>Cliente</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="ClienteEditar">
+        <form asp-action="NovoTeste">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="IdCliente" class="control-label"></label>
-                <input asp-for="IdCliente" class="form-control" readonly="readonly" />
+                <input asp-for="IdCliente" class="form-control" />
                 <span asp-validation-for="IdCliente" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -32,28 +32,18 @@
                 <input asp-for="Endereco" class="form-control" />
                 <span asp-validation-for="Endereco" class="text-danger"></span>
             </div>
-            @foreach (var itemAgenda in Model.Agendamentos)
-            {
             <div class="form-group">
-                <h5>Agendamentos</h5>
-                <table>
-                    <tbody>
-                        <tr>
-                            <td>
-                                <select asp-for="@itemAgenda.DiaDaSemana" asp-items="Html.GetEnumSelectList<DiasDaSemana>()" class="form-control"></select>
-                                <span asp-validation-for="@itemAgenda.DiaDaSemana" class="text-danger"></span>
-                            </td>
-                            <td>
-                                <input asp-for="@itemAgenda.Hora" class="form-control" />
-                                <span asp-validation-for="@itemAgenda.Hora" class="text-danger"></span>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                <label asp-for="email" class="control-label"></label>
+                <input asp-for="email" class="form-control" />
+                <span asp-validation-for="email" class="text-danger"></span>
             </div>
-            }
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <label asp-for="telefone" class="control-label"></label>
+                <input asp-for="telefone" class="form-control" />
+                <span asp-validation-for="telefone" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-default" />
             </div>
         </form>
     </div>

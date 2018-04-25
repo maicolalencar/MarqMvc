@@ -15,53 +15,53 @@
     <thead>
         <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.IdCliente)
-                </th>
-                <th>
                     @Html.DisplayNameFor(model => model.NomeCliente)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.DataNascimento)
+                    @Html.DisplayNameFor(model => model.Agendamentos)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Endereco)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.DiaDaSemana)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Hora)
+                    @Html.DisplayName("Ações")
                 </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+        @foreach (var item in Model)
+        {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.IdCliente)
+                @Html.ActionLink(item.NomeCliente, "ClientePaginaEditar", new { id = item.IdCliente })
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.NomeCliente)
+                @if (item.Agendamentos != null)
+                {
+                <table class="table-mini">
+                    <tbody>
+                        @foreach (var itemAgendamento in item.Agendamentos)
+                        {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => itemAgendamento.DiaDaSemana)
+                            </td>
+                            <td>
+                                -
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => itemAgendamento.Hora)
+                            </td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+                }
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DataNascimento)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Endereco)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DiaDaSemana)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Hora)
-            </td>
-            <td>
-                @Html.ActionLink("Editar", "ClientePaginaEditar", new { id=item.IdCliente }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Excluir", "ClienteExcluir", new { id=item.IdCliente })
-            </td>
-        </tr>
+                <td>
+                    @Html.ActionLink("Editar", "ClientePaginaEditar", new { id = item.IdCliente }) |
+                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Excluir", "ClienteExcluir", new { id = item.IdCliente })
+                </td>
+</tr>
 }
     </tbody>
 </table>

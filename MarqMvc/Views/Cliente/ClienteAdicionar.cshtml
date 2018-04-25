@@ -1,11 +1,9 @@
 ﻿@model MarqMvc.Models.Cliente
-
 @{
     ViewData["Title"] = "ClienteAdicionar";
+    var ddlDiasDaSemana = Html.GetEnumSelectList<DiasDaSemana>();
 }
-
 <h2>ClienteAdicionar</h2>
-
 <h4>Cliente</h4>
 <hr />
 <div class="row">
@@ -28,14 +26,23 @@
                 <span asp-validation-for="Endereco" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="DiaDaSemana" class="control-label"></label>
-                <select asp-for="DiaDaSemana" asp-items="Html.GetEnumSelectList<DiasDaSemana>()" class="form-control"></select>
-                <span asp-validation-for="DiaDaSemana" class="text-danger"></span>
+                <label asp-for="email" class="control-label"></label>
+                <input asp-for="email" class="form-control" />
+                <span asp-validation-for="email" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Hora" class="control-label"></label>
-                <input asp-for="Hora" class="form-control" />
-                <span asp-validation-for="Hora" class="text-danger"></span>
+                <label asp-for="telefone" class="control-label"></label>
+                <input asp-for="telefone" class="form-control" />
+                <span asp-validation-for="telefone" class="text-danger"></span>
+            </div>
+            @await Html.PartialAsync("_AgendamentoAdicionar")
+            <div>
+                <button value="Teste incluir json" id="btnTeste">Clique aqui</button>
+                <button value="Teste 2" id="btnTeste2" type="button">Clique Teste2</button>
+                <button id="btnSimpleObject" type="button">Clique ajax simple object</button>
+                <button id="btnAjaxString" type="button">Clique ajax string</button>
+                <input id="send" type="button" value="Clique ajax XMLInvoiceGeneration" />
+                <input id="send2" type="button" value="Clique ajax XMLInvoiceGeneration Async" />
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-default" />
@@ -43,8 +50,176 @@
         </form>
     </div>
 </div>
-
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
+@section Scripts {
+    <script>
+        $(function () {
+            var txtTelefone = $("#telefone");
+            txtTelefone.mask("(99) 99999-9999");
+                
+            var btnTeste2 = $("#btnTeste2");
+            btnTeste2.on("click", function () {
+                alert("chamou");
+                //teste de obteção dos campos:
+                var txtNomeCliente = $("#NomeCliente").val();
+                var txtDataNascimento = $("#DataNascimento").val();
+                var txtEndereco = $("#Endereco").val();
+                var txtEmail = $("#Email").val();
+                var txtTelefone = $("#Telefone").val();
+                var txtDiaDaSemana = $("#DiaDaSemana").val();
+                var txtHora = $("#Hora").val();
 
+                var jsonAgendamento = [
+                    txtDiaDaSemana.forEach()
+                    { DiaDaSemana: txtDiaDaSemana, Hora: txtHora }]
+
+                var jsonCliente = {
+                    cliente : {
+                        NomeCliente: txtNomeCliente,
+                        DataNascimento: txtDataNascimento,
+                        Endereco: txtEndereco,
+                        Agendamentos: jsonAgendamento
+                    }
+                };
+                var strJson = JSON.stringify({ cliente: jsonCliente });
+                $.ajax({
+                    url: "@Url.Action("ClienteAdicionar")", //"Cliente/ClienteAdicionar",
+                    type: "POST",
+                    data: jsonCliente,
+                    dataType: "json",
+                    error: function (response) {
+                        alert("Error" + response);
+                    },
+                    success: function (response) {
+
+                        alert("sucesso" + response);
+
+                    }
+                });
+            });
+
+            var btnSimpleObject = $("#btnSimpleObject");
+            btnSimpleObject.on("click", function () {
+                alert("chamou");
+                var data = { varTeste1: { "varStringTeste": "teste" } };
+                $.ajax({
+                    url: "@Url.Action("TesteAjax")", //"Cliente/ClienteAdicionar",
+                    type: "POST",
+                    data: data,
+                    dataType: "json",
+                    error: function (response) {
+                        alert("Error" + response);
+                    },
+                    success: function (response) {
+
+                        alert("sucesso" + response);
+
+                    }
+                });
+            });
+
+            var btnAjaxString = $("#btnAjaxString");
+            btnAjaxString.on("click", function () {
+                alert("chamou");
+                var varStringTeste = "testeOK";
+                $.ajax({
+                    url: "@Url.Action("TesteAjaxString")", //"Cliente/ClienteAdicionar",
+                    type: "POST",
+                    data: JSON.stringify("teste"),
+                    dataType: "json",
+                    error: function (response) {
+                        alert("Error" + response);
+                    },
+                    success: function (response) {
+
+                        alert("sucesso" + response);
+
+                    }
+                });
+            });
+            $("input#send").on("click", function () {
+                var xmlids = Array();
+                alert("chamou");
+                for (var i = 0; i < 2; i++) {
+                    var xdata = {
+                        "XmlOid": 1,
+                        "CourierCompany": "TempData",
+//                        "CourierService": "Temp",
+                        "StoreId": 2
+                    };
+
+                    xmlids.push(xdata);
+                }
+
+                var data = { invoices: xmlids };
+
+                $.ajax({
+                    url: "@Url.Action("ProcessSaleOrder")",
+                    type: "POST",
+                    dataType: "json",
+                    async: false,
+                    data: data
+                });
+            });
+
+            $("input#send2").on("click", function () {
+                var xmlids = Array();
+                alert("chamou");
+                for (var i = 0; i < 2; i++) {
+                    var xdata = {
+                        "XmlOid": 1,
+                        "CourierCompany": "TempData",
+//                        "CourierService": "Temp",
+                        "StoreId": 2
+                    };
+
+                    xmlids.push(xdata);
+                }
+
+                var data = { invoices: xmlids };
+
+                $.ajax({
+                    url: "@Url.Action("ProcessSaleOrderAsync")",
+                    type: "POST",
+                    dataType: "json",
+                    data: data
+                });
+            });
+
+            var lnkIncluirNovo = $('#lnkIncluirNovo');
+            //var divAgendamentos = $('#divAgendamentos');
+            var divAgendamentos = $('div.row');
+            lnkIncluirNovo.on("click", function () {
+                var teste = `
+<div class="col-md-4" style="overflow: hidden;">
+            <div class="form-group">
+                <label class="control-label" for="DiaDaSemana">DiaDaSemana</label>
+                <select class="form-control" data-val="true" data-val-required="The DiaDaSemana field is required." id="DiaDaSemana" name="DiaDaSemana"><option value="0">Domingo</option>
+<option value="1">Segunda-feira</option>
+<option value="2">Terça-feira</option>
+<option value="3">Quarta-feira</option>
+<option value="4">Quinta-feira</option>
+<option value="5">Sexta-feira</option>
+<option value="6">Sábado</option>
+</select>
+                <span class="text-danger field-validation-valid" data-valmsg-for="DiaDaSemana" data-valmsg-replace="true"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label" for="Hora">Hora</label>
+                <input class="form-control" type="time" data-val="true" data-val-required="The Hora field is required." id="Hora" name="Hora" value="">
+                <span class="text-danger field-validation-valid" data-valmsg-for="Hora" data-valmsg-replace="true"></span>
+            </div>
+            <div><span id="lnkIncluirNovo">+</span></div>
+    </div>
+                `;
+                //alert(divAgendamentos.text);
+                //var teste = divAgendamentos.text;
+                divAgendamentos.append(teste);
+                //divAgendamentos.append('    <div class="col-md-4" style="overflow: hidden;">                    < div class= "form-group" >                    <label asp-for="DiaDaSemana" class="control-label"></label>                    <select asp-for="DiaDaSemana" asp-items="Html.GetEnumSelectList<DiasDaSemana>()" class="form-control"></select>                    <span asp-validation-for="DiaDaSemana" class="text-danger"></span>            </div >                    <div class="form-group">                        <label asp-for="Hora" class="control-label"></label>                        <input asp-for="Hora" class="form-control" />                        <span asp-validation-for="Hora" class="text-danger"></span>                    </div>                    <div><span id="lnkIncluirNovo">+</span></div>    </div >');
+
+            });
+        });
+    </script>
+    }
