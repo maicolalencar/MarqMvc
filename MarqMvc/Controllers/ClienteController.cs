@@ -90,17 +90,29 @@ namespace MarqMvc.Controllers
         {
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri(BaseUri);
-                client.DefaultRequestHeaders.Accept.Clear();
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                try
+                {
+                    client.BaseAddress = new Uri(BaseUri);
+                    client.DefaultRequestHeaders.Accept.Clear();
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                HttpResponseMessage response = await client.PostAsJsonAsync("api/Clientes/", cliente);
+                    HttpResponseMessage response = await client.PostAsJsonAsync("api/Clientes/", cliente);
 
-                response.EnsureSuccessStatusCode();
+                    response.EnsureSuccessStatusCode();
 
-                TempData["Mensagem"] = "Cliente incluído com sucesso.";
+                    TempData["Mensagem"] = "Cliente incluído com sucesso";
 
-                return RedirectToAction("ClienteLista");
+                    //return RedirectToAction("ClienteLista");
+                    return Json(new { success = true });
+                }
+                catch(Exception e)
+                {
+                    TempData["Mensagem"] = "Ocorreu um erro na inclusão do cliente";
+
+                    //return RedirectToAction("ClienteLista");
+                    return Json(new { success = false, mensagem = "Ocorreu um erro na inclusão do cliente" });
+
+                }
 
             }
         }
@@ -142,6 +154,8 @@ namespace MarqMvc.Controllers
                 HttpResponseMessage response = await client.DeleteAsync($"api/Clientes/{id}");
 
                 response.EnsureSuccessStatusCode();
+
+                TempData["Mensagem"] = "Cliente excluído com sucesso.";
 
                 return RedirectToAction("ClienteLista");
 
