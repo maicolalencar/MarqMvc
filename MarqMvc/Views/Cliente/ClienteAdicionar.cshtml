@@ -112,7 +112,7 @@
             var divAgendamentos = $('#divAgendamentos');
             var divItemAgendamento = $('#divItemAgendamento');
             lnkIncluirNovo.on("click", function () {
-                divItemAgendamento.append(divItemAgendamento.html());
+                divAgendamentos.append(divItemAgendamento.parent().html());
             });
         });
     </script>

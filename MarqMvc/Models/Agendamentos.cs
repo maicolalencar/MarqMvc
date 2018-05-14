@@ -8,6 +8,10 @@ namespace MarqMvc.Models
 {
     public class Agendamentos
     {
+        public int Id { get; set; }
+
+        public int ClienteIdCliente { get; set; }
+
         public DiasDaSemana DiaDaSemana { get; set; }
 
         [DataType(DataType.Time)]

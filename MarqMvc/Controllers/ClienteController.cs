@@ -52,7 +52,7 @@ namespace MarqMvc.Controllers
 
 
             }
-                return View(listaClientes);
+            return View(listaClientes);
         }
 
         public async Task<IActionResult> ClienteLista()
@@ -105,7 +105,7 @@ namespace MarqMvc.Controllers
                     //return RedirectToAction("ClienteLista");
                     return Json(new { success = true });
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
                     TempData["Mensagem"] = "Ocorreu um erro na inclusão do cliente";
 
@@ -167,18 +167,148 @@ namespace MarqMvc.Controllers
         {
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri(BaseUri);
-                client.DefaultRequestHeaders.Accept.Clear();
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                try
+                {
+                    client.BaseAddress = new Uri(BaseUri);
+                    client.DefaultRequestHeaders.Accept.Clear();
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                HttpResponseMessage response = await client.PutAsJsonAsync($"api/Clientes/{cliente.IdCliente}", cliente);
+                    HttpResponseMessage response = await client.PutAsJsonAsync($"api/Clientes/{cliente.IdCliente}", cliente);
 
-                response.EnsureSuccessStatusCode();
+                    response.EnsureSuccessStatusCode();
 
-                TempData["Mensagem"] = "Cliente alterado com sucesso.";
+                    TempData["Mensagem"] = "Cliente alterado com sucesso.";
 
-                return RedirectToAction("ClienteLista");
+                    return Json(new { success = true });
+                }
+                catch (Exception e)
+                {
+                    TempData["Mensagem"] = "Ocorreu um erro na inclusão do cliente";
 
+                    //return RedirectToAction("ClienteLista");
+                    return Json(new { success = false, mensagem = "Ocorreu um erro na inclusão do cliente" });
+
+                }
+            }
+        }
+
+        public async Task<IActionResult> IncluirAgendamento(Agendamentos agendamento)
+        {
+            using (var client = new HttpClient())
+            {
+                try
+                {
+                    client.BaseAddress = new Uri(BaseUri);
+                    client.DefaultRequestHeaders.Accept.Clear();
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                    HttpResponseMessage response = await client.PostAsJsonAsync($"api/Agendamentos/", agendamento);
+
+                    response.EnsureSuccessStatusCode();
+
+                    var result = await response.Content.ReadAsStringAsync();
+                    var resultJson = JsonConvert.DeserializeObject<Agendamentos>(result);
+                    //TempData["Mensagem"] = "Agendamentos alterado com sucesso.";
+
+                    return Json(new { success = true, novoAgendamentoId = resultJson.Id });
+                }
+                catch (Exception e)
+                {
+                    //TempData["Mensagem"] = "Ocorreu um erro na inclusão do cliente";
+
+                    //return RedirectToAction("ClienteLista");
+                    return Json(new { success = false, mensagem = "Ocorreu um erro na inclusão do agendamento" });
+
+                }
+            }
+        }
+
+        public async Task<IActionResult> AlterarAgendamento(Agendamentos agendamento)
+        {
+            using (var client = new HttpClient())
+            {
+                try
+                {
+                    client.BaseAddress = new Uri(BaseUri);
+                    client.DefaultRequestHeaders.Accept.Clear();
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                    HttpResponseMessage response = await client.PutAsJsonAsync($"api/Agendamentos/{agendamento.Id}", agendamento);
+
+                    response.EnsureSuccessStatusCode();
+
+                    //TempData["Mensagem"] = "Agendamentos alterado com sucesso.";
+
+                    return Json(new { success = true });
+                }
+                catch (Exception e)
+                {
+                    //TempData["Mensagem"] = "Ocorreu um erro na inclusão do cliente";
+
+                    //return RedirectToAction("ClienteLista");
+                    return Json(new { success = false, mensagem = "Ocorreu um erro na alteração do agendamento" });
+
+                }
+            }
+        }
+
+        public async Task<IActionResult> ExcluirAgendamento(Agendamentos agendamento)
+        {
+            using (var client = new HttpClient())
+            {
+                try
+                {
+                    client.BaseAddress = new Uri(BaseUri);
+                    client.DefaultRequestHeaders.Accept.Clear();
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                    HttpResponseMessage response = await client.DeleteAsync($"api/Agendamentos/{agendamento.Id}");
+
+                    response.EnsureSuccessStatusCode();
+
+                    //TempData["Mensagem"] = "Agendamentos alterado com sucesso.";
+
+                    return Json(new { success = true });
+                }
+                catch (Exception e)
+                {
+                    //TempData["Mensagem"] = "Ocorreu um erro na inclusão do cliente";
+
+                    //return RedirectToAction("ClienteLista");
+                    return Json(new { success = false, mensagem = "Ocorreu um erro na exclusão do cliente" });
+
+                }
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AgendamentoAdicionar(Agendamentos agendamento)
+        {
+            using (var client = new HttpClient())
+            {
+                try
+                {
+                    client.BaseAddress = new Uri(BaseUri);
+                    client.DefaultRequestHeaders.Accept.Clear();
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                    HttpResponseMessage response = await client.PostAsJsonAsync("api/Agendamentos/", agendamento);
+
+                    response.EnsureSuccessStatusCode();
+
+                    TempData["Mensagem"] = "Cliente incluído com sucesso";
+
+                    //return RedirectToAction("ClienteLista");
+                    return Json(new { success = true });
+                }
+                catch (Exception e)
+                {
+                    TempData["Mensagem"] = "Ocorreu um erro na inclusão do cliente";
+
+                    //return RedirectToAction("ClienteLista");
+                    return Json(new { success = false, mensagem = "Ocorreu um erro na inclusão do cliente" });
+
+                }
 
             }
         }

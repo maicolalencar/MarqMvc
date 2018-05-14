@@ -2,8 +2,8 @@
 <h4>Agendamentos</h4>
 <hr />
 <div id="divAgendamentos" class="row">
-    <div id="divItemAgendamento"class="col-md-4" style="overflow: hidden;">
-        <div>
+    <div>
+        <div id="divItemAgendamento" class="col-md-4" style="overflow: hidden;">
             <div class="form-group">
                 <label asp-for="DiaDaSemana" class="control-label"></label>
                 <select asp-for="DiaDaSemana" asp-items="Html.GetEnumSelectList<DiasDaSemana>()" class="form-control"></select>
@@ -15,7 +15,7 @@
                 <span asp-validation-for="Hora" class="text-danger"></span>
             </div>
         </div>
-     </div>
+    </div>
 </div>
 <div><span id="lnkIncluirNovo">+</span></div>
 <div>
