@@ -1,0 +1,38 @@
+﻿@model MarqMvc.Models.Cliente
+<label>Agendamentos</label> <span id="btnEditarAgendamento" class="span-link">Editar Agendamento</span><span id="lnkVoltar" style="display:none" class="span-link">Finalizar edição</span>
+
+<div id="divAgendamentosReadOnly" class="form-group">
+    @foreach (var itemAgenda in Model.Agendamentos)
+    {
+        <div>
+            <div id="divItemAgendamentoReadOnly">
+                <table>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <input asp-for="@itemAgenda.Id" style="display:none" class="form-control" disabled />
+                                <span asp-validation-for="@itemAgenda.Id" class="text-danger" disabled></span>
+                            </td>
+                            <td>
+                                <select asp-for="@itemAgenda.DiaDaSemana" asp-items="Html.GetEnumSelectList<DiasDaSemana>()" class="form-control" disabled></select>
+                                <span asp-validation-for="@itemAgenda.DiaDaSemana" class="text-danger" disabled></span>
+                            </td>
+                            <td>
+                                <input asp-for="@itemAgenda.Hora" class="form-control" disabled />
+                                <span asp-validation-for="@itemAgenda.Hora" class="text-danger"></span>
+                            </td>
+                            <td>
+                                <input type="button" value="Alterar" style="display:none" class="btn-default btn-alterar-agendamento" />
+                                <input type="button" value="Salvar" style="display:none" class="btn-default btn-salvar-agendamento" />
+                            </td>
+                            <td>
+                                <input type="button" value="Excluir" style="display:none" class="btn-default btn-excluir-agendamento" />
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+</div>
+<div><span id="lnkIncluirNovo" style="display:none" class="span-link">Novo Agendamento</span></div>
