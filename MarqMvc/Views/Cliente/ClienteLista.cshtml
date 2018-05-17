@@ -56,11 +56,12 @@
                 </table>
                 }
             </td>
-                <td>
-                    @Html.ActionLink("Editar", "ClientePaginaEditar", new { id = item.IdCliente }) |
-                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                    @Html.ActionLink("Excluir", "ClienteExcluir", new { id = item.IdCliente })
-                </td>
+            <td>
+                @Html.ActionLink("Editar", "ClientePaginaEditar", new { id = item.IdCliente }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Pagamento", "PagamentoTelaAdicionar", "Pagamento", new { idCliente = item.IdCliente /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Excluir", "ClienteExcluir", new { id = item.IdCliente })
+            </td>
 </tr>
 }
     </tbody>

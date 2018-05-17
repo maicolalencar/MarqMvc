@@ -1,11 +1,11 @@
 ﻿@model MarqMvc.Models.Cliente
-<label>Agendamentos</label> <span id="btnEditarAgendamento" class="span-link">Editar Agendamento</span><span id="lnkVoltar" style="display:none" class="span-link">Finalizar edição</span>
 
-<div id="divAgendamentosReadOnly" class="form-group">
+<div id="divAgendamentos" class="form-group">
+    <label>Agendamentos</label> <span id="btnEditarAgendamento" class="span-link">Editar Agendamento</span><span id="lnkVoltar" style="display:none" class="span-link">Finalizar edição</span>
     @foreach (var itemAgenda in Model.Agendamentos)
     {
         <div>
-            <div id="divItemAgendamentoReadOnly">
+            <div id="divItemAgendamento">
                 <table>
                     <tbody>
                         <tr>

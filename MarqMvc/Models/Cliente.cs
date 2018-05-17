@@ -26,5 +26,6 @@ namespace MarqMvc.Models
         public string telefone { get; set; }
 
         public IList<Agendamentos> Agendamentos { get; set; }
+        public IList<Pagamentos> Pagamentos { get; set; }
     }
 }

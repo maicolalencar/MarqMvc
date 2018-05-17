@@ -1,0 +1,38 @@
+﻿@model MarqMvc.Models.Cliente
+
+<div id="divPagamentos" class="form-group">
+    <label>Pagamento</label> <span id="btnEditarPagamento" class="span-link">Editar Pagamento</span><span id="lnkVoltarPagamento" style="display:none" class="span-link">Finalizar edição</span>
+    @foreach (var itemPagamento in Model.Pagamentos)
+    {
+    <div>
+        <div id="divItemPagamento">
+            <table>
+                <tbody>
+                    <tr>
+                        <td>
+                            <input asp-for="@itemPagamento.Id" style="display:none" class="form-control" disabled />
+                            <span asp-validation-for="@itemPagamento.Id" class="text-danger" disabled></span>
+                        </td>
+                        <td>
+                            <input asp-for="@itemPagamento.DataPagamento" class="form-control" disabled></input>
+                            <span asp-validation-for="@itemPagamento.DataPagamento" class="text-danger" disabled></span>
+                        </td>
+                        <td>
+                            <input asp-for="@itemPagamento.Valor" class="form-control" disabled />
+                            <span asp-validation-for="@itemPagamento.Valor" class="text-danger"></span>
+                        </td>
+                        <td>
+                            <input type="button" value="Alterar" style="display:none" class="btn-default btn-alterar-pagamento" />
+                            <input type="button" value="Salvar" style="display:none" class="btn-default btn-salvar-pagamento" />
+                        </td>
+                        <td>
+                            <input type="button" value="Excluir" style="display:none" class="btn-default btn-excluir-pagamento" />
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    }
+</div>
+<div><span id="lnkIncluirNovoPagamento" style="display:none" class="span-link">Novo Pagamento</span></div>
